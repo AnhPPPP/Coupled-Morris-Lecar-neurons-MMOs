@@ -64,7 +64,7 @@ g1= @(v2,v1) phi1*(winf1(v1)-w1_cri(v2,v1))./tauw1(v1);
 f2= @(v2,w2) (1/c2)*(i2-ica2(v2)-ik2(v2,w2)-il2(v2));
 v1_null = @(w2,v2,v1) g1(v2,v1)-der_F1_v2(v2,v1).*f2(v2,w2);
 
-%the fold
+%the fold surfaces
 L=ver_der_F1_v1(v2,v1);
 %the first equation in the desingularized system
 M=v1_null(w2,v2,v1);
@@ -118,10 +118,10 @@ plot3(A(:,1),A(:,2),A(:,3), 'g', 'linewidth', 3)
 plot3(B(:,1),B(:,2),B(:,3), 'g', 'linewidth', 3)
 
 %the fold surface
-fimplicit3(der_F1_v1,'FaceColor', [0.72 0.27 1],'EdgeColor','none', 'FaceAlpha', 0.5)
+fimplicit3(L,'FaceColor', [0.72 0.27 1],'EdgeColor','none', 'FaceAlpha', 0.5)
 
 %the first equation in desingularized system surface
-fimplicit3(v1_null,'FaceColor', [1.0 0.0 1.0],'EdgeColor','none')
+fimplicit3(M,'FaceColor', [1.0 0.0 1.0],'EdgeColor','none')
  
 %phase transition
 plot3(Y31(6008,4),Y31(6008,3),Y31(6008,1), 'g^', 'MarkerFaceColor', 'g', 'MarkerSize', 20)
