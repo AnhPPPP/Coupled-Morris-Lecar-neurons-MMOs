@@ -1,0 +1,39 @@
+#fold curve
+dv1/dt=(i1-ica1-ik1-il1-isyn1)/c1
+
+#Parameters 
+#treat w1, v2 as parameters 
+par gsyn=4.4
+par  w1=-0.001,v2=-60
+par c1=8, c2=100
+par vca=120, vk=-84, vl=-60, vsyn=30
+par beta=0.5, theta=-20, sigma=10, phi1=0.01, phi2=0.001,
+par i1=0, i2=60
+par gca=4, gk=8, gl=2
+par k1=-1.2, k2=18, k3=12, k4=17.4
+
+#Steady state functions
+alpha1(v1)=1/(1+exp(-(v1-theta)/sigma))
+alpha2(v2)=1/(1+exp(-(v2-theta)/sigma))
+
+s1(v1)=alpha1(v1)/(alpha1(v1)+beta)
+s2(v2)=alpha2(v2)/(alpha2(v2)+beta)
+
+minf1(v1)=0.5*(1+tanh((v1-k1)/k2))
+winf1(v1)=0.5*(1+tanh((v1-k3)/k4))
+tauw1(v1)=1/cosh((v1-k3)/(2*k4))
+
+#Define currents
+ica1=gca*minf1(v1)*(v1-vca)
+ik1=gk*w1*(v1-vk)
+il1=gl*(v1-vl)
+isyn1=gsyn*s2(v2)*(v1-vsyn)
+
+#initial conditions
+v1(0)=-60
+
+@ dt=.2,total=2000,meth=qualrk,xp=t,yp=v1
+@ xlo=-70,xhi=70,ylo=-70,yhi=70,bound=500000,maxstor=500000
+@ autovar=v,nmax=5000,ntst=250,npr=5000,dsmin=0.0001,dsmax=0.1,ds=0.01,parmin=-200,parmax=500
+@ autoxmin=-70,autoxmax=70,autoymin=-70,autoymax=70
+done
