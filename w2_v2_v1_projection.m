@@ -1,4 +1,3 @@
-% Written by Anh Phan
 %Parameters
 c1=80; c2=100;
 vca=120; vk=-84; vl=-60; vsyn=30;
